@@ -1,6 +1,6 @@
-
+require_relative '../db/db_connection'
 class User
-    attr_reader :username, :email, :bio
+    attr_accessor :username, :email, :bio
 
     def initialize(param)
         @username = param[:username]
@@ -13,5 +13,13 @@ class User
         return false if @username.nil? || @email.nil?
 
         true
+    end
+
+    #Save user data
+    def save
+        client = create_db_client
+        sql = "INSERT INTO user (username, email, bio) VALUES ('#{username}', '#{email}', '#{bio}')"
+        
+        client.query(sql)
     end
 end

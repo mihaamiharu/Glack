@@ -53,4 +53,24 @@ describe User do
             end
         end
     end
+
+    describe '#save' do
+        context 'when user attribute is valid' do
+            it 'should insert data to user table with given attribute' do
+                fill_user = {
+                    username: 'mihaamiharu',
+                    email: 'mihaa@miharu.com',
+                    bio: 'au ah gelap'
+                }
+
+                user = User.new(fill_user)
+                sql = "INSERT INTO user (username, email, bio) VALUES ('#{user.username}', '#{user.email}', '#{user.bio}')"
+                mock_db = double
+                allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+                expect(mock_db).to receive(:query).with(sql)
+
+                user.save
+            end
+        end
+    end
 end
