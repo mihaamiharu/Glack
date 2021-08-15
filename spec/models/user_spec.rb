@@ -1,6 +1,6 @@
-require_relative './test_helper'
-require_relative '../app/models/user'
-require_relative '../app/db/db_connection'
+require_relative '../test_helper'
+require_relative '../../app/models/user'
+require_relative '../../app/db/db_connection'
 
 describe User do
     describe '#initialize' do
