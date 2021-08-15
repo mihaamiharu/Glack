@@ -25,12 +25,24 @@ describe User do
             it 'should return true' do
                 fill_user = {
                     username: 'mihaamiharu',
+                    email: 'mihaa@miharu.com',
+                    bio: 'au ah gelap'
+                }
+
+                user = User.new(fill_user)
+                expect(user.valid?).to eq(true)
+            end
+            
+            it 'should return true even bio is nil' do
+                fill_user = {
+                    username: 'mihaamiharu',
                     email: 'mihaa@miharu.com'    
                 }
 
                 user = User.new(fill_user)
                 expect(user.valid?).to eq(true)
             end
+
         end
 
         context 'when given invalid params' do
