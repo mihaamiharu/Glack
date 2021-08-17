@@ -63,6 +63,15 @@ describe User do
                 user = User.new(fill_user)
                 expect(user.valid?).to be_falsey
             end
+
+            it 'should return false when email format is invalid' do
+                fill_user = {
+                    email: 'mihaamiharu'    
+                }
+
+                user = User.new(fill_user)
+                expect(user.valid?).to be_falsey
+            end
         end
     end
 

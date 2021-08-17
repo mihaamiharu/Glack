@@ -9,9 +9,17 @@ class User
   end
 
   def valid?
-      return false if @username.nil? || @email.nil?
+      return false if @username.nil? || @email.nil? || is_a_valid_email?
 
       true
+  end
+
+  def is_a_valid_email?
+    email_regex = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+    return true unless @email.match(email_regex)
+
+    false
+
   end
 
   def save
