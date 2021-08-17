@@ -94,4 +94,22 @@ describe User do
             end
         end
     end
+
+    describe '.sql_parse' do
+        it 'should return rawsql data to ruby array object' do
+            fill_raw = {
+                'username' => 'mihaamiharu',
+                'email' => 'mihaa@miharu.com',
+                'bio' => 'au ah gelap'
+            }
+
+            sql_data = [fill_raw]
+            user = User.new(fill_raw)
+            expected_result = [user]
+            sql_data.each do |data|
+                allow(User).to receive(:new).with(data).and_return(user)
+            end
+            expect(User.sql_parse(sql_data)).to eq(expected_result)
+        end
+    end
 end

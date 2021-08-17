@@ -28,4 +28,13 @@ class User
         
       client.query(sql)
   end
+
+  def self.sql_parse(sql_raw)
+    users = []
+    sql_raw.each do |row|
+        user = User.new(row)
+        users << user
+    end
+    users
+  end
 end
