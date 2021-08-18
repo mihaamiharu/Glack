@@ -37,4 +37,14 @@ class User
     end
     users
   end
+
+  def convert_json
+    result = {
+      username: username,
+      email: email,
+      bio: bio,
+    }
+
+    result
+  end
 end

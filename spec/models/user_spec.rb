@@ -97,19 +97,39 @@ describe User do
 
     describe '.sql_parse' do
         it 'should return rawsql data to ruby array object' do
-            fill_raw = {
+            fill_user = {
                 'username' => 'mihaamiharu',
                 'email' => 'mihaa@miharu.com',
                 'bio' => 'au ah gelap'
             }
 
-            sql_data = [fill_raw]
-            user = User.new(fill_raw)
+            sql_data = [fill_user]
+            user = User.new(fill_user)
             expected_result = [user]
             sql_data.each do |data|
                 allow(User).to receive(:new).with(data).and_return(user)
             end
             expect(User.sql_parse(sql_data)).to eq(expected_result)
+        end
+    end
+
+    describe '#convert_json' do
+        context 'convert object to JSON' do
+            it 'should return as JSON' do
+                user = User.new({
+                    'username' => 'mihaamiharu',
+                    'email' => 'mihaa@miharu.com',
+                    'bio' => 'au ah gelap'
+                })
+
+                expected_result = {
+                    username: user.username,
+                    email: user.email,
+                    bio: user.bio
+                }
+
+                expect(user.convert_json).to eq(expected_result)
+            end
         end
     end
 end
