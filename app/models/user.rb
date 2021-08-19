@@ -48,17 +48,5 @@ class User
     }
   end
 
-  def self.find_users
-    client = create_db_client
-    result = client.query("SELECT username,email, bio FROM user")
-    map = sql_parse(result)
-    map.map_parse
-  end
 
-  def self.find_user(username)
-    client = create_db_client
-    result = client.query("SELECT username, email, bio FROM user WHERE username = '#{username}'")
-    sql_parse(result)
-    map.map_parse
-  end
 end
