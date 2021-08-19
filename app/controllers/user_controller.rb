@@ -5,4 +5,8 @@ class UserController
         user = User.new(user_data)
         user.save
     end
+
+    def self.find_user(username) 
+        User.find_user(username)
+    end
 end
