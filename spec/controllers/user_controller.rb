@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+require_relative '../spec_helper'
 require_relative '../../app/controllers/user_controller'
 require_relative '../../app/models/user'
 
@@ -19,6 +20,14 @@ describe UserController do
 
                 UserController.save(user_data)
             end
+        end
+    end
+
+    describe '.find_user' do
+        it 'should have username params' do
+            username = 'mihaamiharu'
+            expect(User).to receive(:find_user).with('mihaamiharu')
+            UserController.find_user(username)
         end
     end
 end
