@@ -54,4 +54,10 @@ class User
     sql_parse(result)
   end
 
+  def self.find_user(username)
+    client = create_db_client
+    result = client.query("SELECT username, email, bio FROM user WHERE username = '#{username}'")
+    sql_parse(result)
+  end
+  
 end

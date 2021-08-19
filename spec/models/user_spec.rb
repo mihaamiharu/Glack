@@ -159,4 +159,32 @@ describe User do
         end
     end
 
+    describe '.find_user_by_username' do
+        context 'username is found' do
+            it 'should return user for selected username' do
+                user_data = {
+                    username: 'mihaamiharu',
+                    email: 'mihaa@miharu.com',
+                    bio: 'au ah gelap'
+                }
+
+                user = User.new(user_data)
+
+                mock_result = [{
+                    "username" => user.username,
+                    "email" => user.email,
+                    "bio" => user.bio
+                }]
+
+                sql_query = "SELECT username, email, bio FROM user WHERE username = '#{user.username}'"
+
+                mock_db = double
+                allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+                expect(mock_db).to receive(:query).with(sql_query).and_return(mock_result)
+
+                User.find_user(user.username)
+            end
+        end
+    end
+
 end
