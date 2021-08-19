@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+require_relative '../spec_helper'
 require_relative '../../app/models/user'
 require_relative '../../app/db/db_connection'
 
@@ -113,23 +114,20 @@ describe User do
         end
     end
 
-    describe '#convert_json' do
-        context 'convert object to JSON' do
-            it 'should return as JSON' do
-                user = User.new({
-                    'username' => 'mihaamiharu',
-                    'email' => 'mihaa@miharu.com',
-                    'bio' => 'au ah gelap'
-                })
+    describe '.map_parse' do
+        it 'should convert sql_parse to map format' do
+            fill_user = {
+                'username' => @username,
+                'email' => @email,
+                'bio' => @bio
+            }
 
-                expected_result = {
-                    username: user.username,
-                    email: user.email,
-                    bio: user.bio
-                }
-
-                expect(user.convert_json).to eq(expected_result)
+            map_data = fill_user
+            user = User.new(fill_user)
+            map_data.each do |data|
+                allow(User).to receive(:new).with(data).and_return(user)
             end
+            expect(User.map_parse).to eq(fill_user)
         end
     end
 end
