@@ -130,4 +130,32 @@ describe User do
             expect(User.map_parse).to eq(fill_user)
         end
     end
+
+    describe '.find_user' do
+        context 'data user is found' do
+            it 'should return all user' do
+                fill_user = {
+                    username: 'mihaamiharu',
+                    email: 'mihaa@miharu.com',
+                    bio: 'au ah gelap'
+                }
+
+                user = User.new(fill_user)
+                
+                mock_result = [{
+                    "username" => user.username,
+                    "email" => user.email,
+                    "bio" => user.bio
+                }]
+
+                sql_query = "SELECT username, email, bio FROM user"
+
+                mock_db = double
+                allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+                expect(mock_db).to receive(:query).with(sql_query).and_return(mock_result)
+
+                User.find_users
+            end
+        end
+    end
 end

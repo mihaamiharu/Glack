@@ -48,5 +48,10 @@ class User
     }
   end
 
+  def self.find_users
+    client = create_db_client
+    result = client.query("SELECT username, email, bio FROM user")
+    sql_parse(result)
+  end
 
 end
