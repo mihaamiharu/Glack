@@ -7,16 +7,16 @@ describe User do
     describe '#initialize' do
         context 'when initialized with given params' do
             it 'should return user instance with given params' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu',
                     email: 'mihaa@miharu.com',
                     bio: 'au ah gelap'
                 }
 
-                user = User.new(fill_user)
-                expect(user.username).to eq(fill_user[:username])
-                expect(user.email).to eq(fill_user[:email])
-                expect(user.bio).to eq(fill_user[:bio])
+                user = User.new(user_data)
+                expect(user.username).to eq(user_data[:username])
+                expect(user.email).to eq(user_data[:email])
+                expect(user.bio).to eq(user_data[:bio])
             end
         end
     end
@@ -24,23 +24,23 @@ describe User do
     describe '#valid?' do
         context 'when given valid params' do
             it 'should return true' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu',
                     email: 'mihaa@miharu.com',
                     bio: 'au ah gelap'
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 expect(user.valid?).to eq(true)
             end
             
             it 'should return true even bio is nil' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu',
                     email: 'mihaa@miharu.com'    
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 expect(user.valid?).to eq(true)
             end
 
@@ -48,29 +48,29 @@ describe User do
 
         context 'when given invalid params' do
             it 'should return false when email is nil' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu'   
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 expect(user.valid?).to be_falsey
             end
 
             it 'should return false when username is nil' do
-                fill_user = {
+                user_data = {
                     email: 'mihaa@miharu.com'    
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 expect(user.valid?).to be_falsey
             end
 
             it 'should return false when email format is invalid' do
-                fill_user = {
+                user_data = {
                     email: 'mihaamiharu'    
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 expect(user.valid?).to be_falsey
             end
         end
@@ -79,13 +79,13 @@ describe User do
     describe '#save' do
         context 'when user attribute is valid' do
             it 'should insert data to user table with given attribute' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu',
                     email: 'mihaa@miharu.com',
                     bio: 'au ah gelap'
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 sql = "INSERT INTO user (username, email, bio) VALUES ('#{user.username}', '#{user.email}', '#{user.bio}')"
                 mock_db = double
                 allow(Mysql2::Client).to receive(:new).and_return(mock_db)
@@ -98,14 +98,14 @@ describe User do
 
     describe '.sql_parse' do
         it 'should return rawsql data to ruby array object' do
-            fill_user = {
+            user_data = {
                 'username' => 'mihaamiharu',
                 'email' => 'mihaa@miharu.com',
                 'bio' => 'au ah gelap'
             }
 
-            sql_data = [fill_user]
-            user = User.new(fill_user)
+            sql_data = [user_data]
+            user = User.new(user_data)
             expected_result = [user]
             sql_data.each do |data|
                 allow(User).to receive(:new).with(data).and_return(user)
@@ -116,31 +116,31 @@ describe User do
 
     describe '.map_parse' do
         it 'should convert sql_parse to map format' do
-            fill_user = {
+            user_data = {
                 'username' => @username,
                 'email' => @email,
                 'bio' => @bio
             }
 
-            map_data = fill_user
-            user = User.new(fill_user)
+            map_data = user_data
+            user = User.new(user_data)
             map_data.each do |data|
                 allow(User).to receive(:new).with(data).and_return(user)
             end
-            expect(User.map_parse).to eq(fill_user)
+            expect(User.map_parse).to eq(user_data)
         end
     end
 
     describe '.find_users' do
         context 'data user is found' do
             it 'should return all user' do
-                fill_user = {
+                user_data = {
                     username: 'mihaamiharu',
                     email: 'mihaa@miharu.com',
                     bio: 'au ah gelap'
                 }
 
-                user = User.new(fill_user)
+                user = User.new(user_data)
                 
                 mock_result = [{
                     "username" => user.username,
