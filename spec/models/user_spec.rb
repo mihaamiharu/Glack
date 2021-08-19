@@ -131,7 +131,7 @@ describe User do
         end
     end
 
-    describe '.find_user' do
+    describe '.find_users' do
         context 'data user is found' do
             it 'should return all user' do
                 fill_user = {
@@ -158,4 +158,5 @@ describe User do
             end
         end
     end
+
 end
